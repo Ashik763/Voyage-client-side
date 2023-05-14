@@ -6,7 +6,7 @@
 •  One can add a package.  
 • One can add a review  and can update & delete his reviews. And to do that one needs to be logged in for sure.  
 • One can see reviews on a particular package.  
-• One can Sign up using emain & password or with his google account.
+• One can Sign up using email & password or with his google account.
 
 
 
