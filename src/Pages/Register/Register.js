@@ -3,8 +3,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiFillGithub } from 'react-icons/ai';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { AuthContext } from '../../Contexts/AuthProvider';
+import { Helmet } from 'react-helmet';
 
-
+const Title = "Register";
 const Register = () => {
     const [error,setError] = useState('');
     const {signInWithGoogle,createUser,updateUserProfile,setLoading,loading} = useContext(AuthContext);
@@ -91,6 +92,10 @@ const Register = () => {
     }
     return (
         <div className="m-5  login-container d-flex align-items-center">
+          <Helmet>
+            <title> {Title}</title>
+          </Helmet>
+
         <div className=" border login-content p-10 m-auto ">
           <form onSubmit = {handleSubmit}>
             <div className="mb-3">

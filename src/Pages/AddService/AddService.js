@@ -1,5 +1,9 @@
 import React from "react";
 
+import { Helmet } from 'react-helmet';
+
+const Title = "Add Package"
+
 const AddService = () => {
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -9,7 +13,7 @@ const AddService = () => {
     const price = form.price.value;
     const description = form.description.value;
     const tour_package  ={tour_name,img,price,description};
-    fetch('http://localhost:5000/addService',{
+    fetch('https://myapp-beige-ten.vercel.app/addService',{
       method:'POST',
       headers: {
         'content-type': 'application/json',
@@ -28,9 +32,12 @@ const AddService = () => {
   }
   return (
     <div className="flex justify-center">
+      <Helmet>
+        <title> {Title}</title>
+      </Helmet>
         
       <div className="md:w-1/2 w-full   ">
-      <p className="text-2xl"> Add a service:</p>
+      <p className="text-2xl"> Add a package:</p>
         <form onSubmit={handleSubmit} className="  w-full md:w-3/4 mt-5">
           <label className="block text-sm font-medium leading-6 text-gray-900 ">Tour Package Name: </label>
           <input

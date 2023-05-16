@@ -16,6 +16,7 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    border:'2px solid black'
   },
 };
 
@@ -33,7 +34,7 @@ const MyReview = ({ review, setReviews, reviews }) => {
     const permission = window.confirm("Are you sure you want to delete?");
     if (permission) {
       e.stopPropagation();
-      fetch(`http://localhost:5000/myReview/${review._id}`, {
+      fetch(`https://myapp-beige-ten.vercel.app/myReview/${review._id}`, {
         method: "delete",
       })
         .then((res) => res.json())
@@ -49,14 +50,37 @@ const MyReview = ({ review, setReviews, reviews }) => {
   };
 
   const handleUpdate = (e) => {
-    console.log(e.target);
+    const description = e.target.description.value;
+
+    for(let i=0;i<reviews.length;i++) {
+        if(reviews[i]._id === review._id){
+          reviews[i].description = description;
+          break;
+        }
+    }
+    // setReviews(reviews);
+    // const selectedReview = reviews.find( r => r._id === review._id);
+    // selectedReview.description = description;
+    // setReviews(selectedReview);
+
     // e.preventDefault();
     // const a = handleChange();
     // console.log(a);
-    // fetch("", {
-    //   method: "PATCH",
-    //   headers: {},
-    // });
+    fetch(`https://myapp-beige-ten.vercel.app/updateReview/${review._id}`, {
+      method: "PATCH",
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body:JSON.stringify({
+        description: description
+      }),
+    })
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+
+
+
+
   };
 
   function handleChange(e) {
@@ -64,7 +88,7 @@ const MyReview = ({ review, setReviews, reviews }) => {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:5000/tourDetails/${review.tour_id}`)
+    fetch(`https://myapp-beige-ten.vercel.app/tourDetails/${review.tour_id}`)
       .then((res) => res.json())
       .then((data) => setTour(data));
   }, [review.tour_id]);
@@ -106,8 +130,9 @@ const MyReview = ({ review, setReviews, reviews }) => {
        
        
         <div >
-          <button onClick={openModal}><AiOutlineEdit></AiOutlineEdit>  </button>
+          <button className="me-2" onClick={openModal}><AiOutlineEdit></AiOutlineEdit>  </button>
           <Modal
+          // className="h-1/2"
             isOpen={modalIsOpen}
             onAfterOpen={afterOpenModal}
             onRequestClose={closeModal}
@@ -115,19 +140,22 @@ const MyReview = ({ review, setReviews, reviews }) => {
             contentLabel="Example Modal"
           
           >
-           
+           <div className="text-center  h-80 w-80"> 
+              <div className=" text-2xl  text-primary ">Edit</div>
+              <form  onSubmit={handleSubmit}   >
+                  <textarea
+                  className="border-2 h-48 w-full m-2"
+                  name="description"
+                  defaultValue={updatedText}
+                  > 
+                  </textarea>
+                  <input className="cursor-pointer btn btn-outline  " type="submit" value="update" />
+                  {/* <button onClick={closeModal}>close</button> */}
+              </form>
+
+           </div>
             
-            <div >I am a modal</div>
-            <form onSubmit={handleSubmit}   >
-                <textarea
-                className="border"
-                name="description"
-                defaultChecked={updatedText}
-                > 
-                </textarea>
-                <input type="submit" value="update" />
-                {/* <button onClick={closeModal}>close</button> */}
-            </form>
+           
           </Modal>
         </div>
 
@@ -156,7 +184,7 @@ const MyReview = ({ review, setReviews, reviews }) => {
               />
             </svg>
             <blockquote>
-              <p className="text-2xl font-medium text-gray-900 dark:text-white">
+              <p className=" font-medium text-gray-900 dark:text-white">
                 {review?.description}
               </p>
             </blockquote>

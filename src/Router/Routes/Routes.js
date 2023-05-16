@@ -10,6 +10,7 @@ import TourDetails from '../../Pages/TourDetails/TourDetails';
 import MyReviews from '../../Pages/MyReviews/MyReviews';
 import AddService from '../../Pages/AddService/AddService';
 import PrivateRoute from '../../Components/PrivateRoute/PrivateRoute';
+import NotFound from '../../Pages/NotFound/NotFound';
 
 
 export const routes = createBrowserRouter([
@@ -27,17 +28,17 @@ export const routes = createBrowserRouter([
             },
             {
                 path:'tour/:id',
-                // loader:({params}) => fetch(`http://localhost:5000/tourDetails/${params.id}`),
+                // loader:({params}) => fetch(`https://myapp-beige-ten.vercel.app/tourDetails/${params.id}`),
                 element:<TourDetails></TourDetails>
             },
             {
                 path:'/myReviews/:email',
-                // loader:({params}) => fetch(`http://localhost:5000/myReviews/${params.email}`),
+                // loader:({params}) => fetch(`https://myapp-beige-ten.vercel.app/myReviews/${params.email}`),
                 element:<PrivateRoute>  <MyReviews></MyReviews> </PrivateRoute>
             },
             {
                 path:'/addService',
-                // loader:({params}) => fetch(`http://localhost:5000/myReviews/${params.email}`),
+                // loader:({params}) => fetch(`https://myapp-beige-ten.vercel.app/myReviews/${params.email}`),
                 element:<PrivateRoute>  <AddService></AddService> </PrivateRoute>
             }
         ]
@@ -55,6 +56,11 @@ export const routes = createBrowserRouter([
     {
         path: '/spinner',
         element:<Spinner></Spinner>
+    },
+    {
+        path: '*',
+        element: <NotFound></NotFound>
+
     }
    
         

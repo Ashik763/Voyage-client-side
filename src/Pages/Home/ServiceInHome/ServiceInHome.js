@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 const ServiceInHome = () => {
     const [tours,setTours]  = useState([]);
     useEffect(()=>{
-        fetch('http://localhost:5000/homeTours')
+        fetch('https://myapp-beige-ten.vercel.app/homeTours')
         .then(res => res.json())
         .then(data => {
             setTours(data);

@@ -5,14 +5,16 @@ import "./Navbar.css";
 // import { BsSun } from 'react-icons/bs';
 // import { BsMoonStars } from 'react-icons/bs';
 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Contexts/AuthProvider';
 
 const Navbar = () => {
-  const email = "ashikghosh763@gmail.com";
+  
 
   const {user,logOut} = useContext(AuthContext);
-  console.log(user);
+  const email= user?.email;
+  // console.log(email);
+  // console.log(user);
   // const {mood,setMood} = useContext(MoodContext);
   const navigate = useNavigate();
   const handleLogOut = () =>{
@@ -27,13 +29,7 @@ const Navbar = () => {
       })
   }
 
-  //Mood
-  // const handleNightMood = () => {
-  //   setMood('night');
-  // }
-  // const handleDayMood = () =>{
-  //   setMood('day');
-  // }
+
     return (
         <div>
          <div className="navbar bg-base-100">
@@ -47,18 +43,18 @@ const Navbar = () => {
         
         <li>  <Link to='/' >Home</Link>  </li> 
         <li>  <Link to='/tours' >All packages</Link>  </li> 
-       {user?<li>  <Link to={`/myReviews/${email}`} >Reviews</Link>   </li> : '' }
-        {user ? <li>  <Link to='/addService' >Add Service</Link>  </li> :''}
+       {user?<li>  <Link to={`/myReviews/${email}`} > My Reviews</Link>   </li> : '' }
+        {user ? <li>  <Link to='/addService' >Add Package</Link>  </li> :''}
       </ul>
     </div>
     <Link to="/" className="btn btn-ghost normal-case text-xl">Voyage</Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-    <li>  <Link to='/' >Home</Link>  </li> 
-        <li>  <Link to='/tours' >All packages</Link>  </li> 
-       {user?<li>  <Link to={`/myReviews/${email}`} >Reviews</Link>   </li> : '' }
-        {user ? <li>  <Link to='/addService' >Add Service</Link>  </li> :''}
+    <li>  <NavLink to="/" className={ ({ isActive }) => (isActive ? ' active topic-name text-decoration-none' : ' topic-name text-decoration-none')  }>  Home</NavLink>   </li> 
+        <li>  <NavLink to="/tours" className={ ({ isActive }) => (isActive ? ' active topic-name text-decoration-none' : ' topic-name text-decoration-none')  }>  All packages</NavLink>   </li> 
+       {user?<li>  <NavLink  className={ ({ isActive }) => (isActive ? ' active topic-name text-decoration-none' : ' topic-name text-decoration-none')  } to={`/myReviews/${email}`} >My Reviews</NavLink>   </li> : '' }
+        {user ? <li>  <NavLink  className={ ({ isActive }) => (isActive ? ' active topic-name text-decoration-none' : ' topic-name text-decoration-none')  } to='/addService' >Add Package</NavLink>  </li> :''}
     </ul>
   </div>
   <div className="navbar-end">

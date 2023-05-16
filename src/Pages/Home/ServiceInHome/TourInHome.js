@@ -10,7 +10,7 @@ const TourInHome = ({ tour }) => {
         <figure className="border w-full cursor-pointer ">
         <PhotoView src={tour.img}>
           <img
-              className="w-full h-[16rem] "
+              className="w-full h-[16rem] object-cover "
               src={tour.img}
               alt="img"
             />
@@ -21,7 +21,7 @@ const TourInHome = ({ tour }) => {
 
         <div className="card-body h-[13rem]">
           <h2 className="card-title">{tour.tour_name}!</h2>
-          <p>{tour?.description.length > 100 ? tour?.description.substring(0,80)+"...": tour.description }</p>
+          <p className=" md:text-xs">{tour?.description.length > 100 ? tour?.description.substring(0,80)+"...": tour.description }</p>
           <div className="card-actions absolute bottom-2 right-2">
             <Link className="btn btn-outline" to={`/tour/${tour._id}`}>View Details</Link>
           </div>

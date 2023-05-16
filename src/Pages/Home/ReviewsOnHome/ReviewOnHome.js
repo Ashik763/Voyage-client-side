@@ -4,7 +4,7 @@ const ReviewOnHome = ({review}) => {
     const [tour, setTour] = useState({});
 
     useEffect(() => {
-        fetch(`http://localhost:5000/tourDetails/${review.tour_id}`)
+        fetch(`https://myapp-beige-ten.vercel.app/tourDetails/${review.tour_id}`)
           .then((res) => res.json())
           .then((data) => setTour(data));
       }, [review.tour_id]);
@@ -41,13 +41,13 @@ const ReviewOnHome = ({review}) => {
             <img
              alt=""
               className="rounded-full w-9 h-9"
-              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+              src={review.img}
              
             ></img>
             <div className="space-y-0.5 font-medium dark:text-white text-left">
               {/* <div>{review.name}</div> */}
               <div className="text-sm text-gray-500 dark:text-gray-400">
-                Developer at Open AI
+                {review.name}
               </div>
             </div>
           </figcaption>

@@ -6,7 +6,7 @@ const ReviewsOnTour = ({id,reviews,setReviews}) => {
   // console.log(reviews,setReviews);
    
     useEffect(() => {
-        fetch(`http://localhost:5000/reviews/${id}`)
+        fetch(`https://myapp-beige-ten.vercel.app/reviews/${id}`)
         .then((res) => res.json())
         .then(data => {
           

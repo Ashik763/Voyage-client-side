@@ -5,7 +5,9 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Contexts/AuthProvider";
 import { AiOutlineGoogle,AiFillGithub } from 'react-icons/ai';
 // import Spinner from "../../Shared/Spinner";
+import { Helmet } from 'react-helmet';
 
+const Title = "Log in"
 const Login = () => {
 
   
@@ -94,6 +96,9 @@ const location  = useLocation();
 }
   return (
     <div className=" login-container flex align-center">
+      <Helmet>
+        <title> {Title}</title>
+      </Helmet>
       <div className="  login-content border p-10 m-auto ">
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

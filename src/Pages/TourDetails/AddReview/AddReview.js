@@ -23,7 +23,7 @@ const AddReview = ({id,setReviews,reviews}) => {
     if(user){
       const reviewText = e.target.review.value;
 
-      fetch('http://localhost:5000/addReview',{
+      fetch('https://myapp-beige-ten.vercel.app/addReview',{
         method: 'POST',
         body:JSON.stringify({description:reviewText,tour_id:id,email:user.email,name:user.displayName,img:user.photoURL}),
         headers: {

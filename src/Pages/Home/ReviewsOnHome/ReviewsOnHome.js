@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const ReviewsOnHome = () => {
     const [homeReviews,setHomeReviews]  = useState([]);
     useEffect(()=>{
-        fetch('http://localhost:5000/homeReviews')
+        fetch('https://myapp-beige-ten.vercel.app/homeReviews')
         .then(res => res.json())
         .then(data => {
             setHomeReviews(data);
