@@ -14,7 +14,7 @@ const MyReviews = () => {
         const { data=[] } = useQuery({
             queryKey: ['myReviews', email],
             queryFn: async () => {
-                const res = await fetch(`http://localhost:5000/myReviews/${email}`, {
+                const res = await fetch(`https://myapp-beige-ten.vercel.app/myReviews/${email}`, {
                     headers: {
                         authorization: `bearer ${localStorage.getItem('accessToken')}`
                     }
@@ -27,7 +27,7 @@ const MyReviews = () => {
         })
 
 
-        // fetch(`http://localhost:5000/myReviews/${email}`)
+        // fetch(`https://myapp-beige-ten.vercel.app/myReviews/${email}`)
         // .then(response => response.json())
         // .then(data => setReviews(data));
     // },[email])

@@ -7,12 +7,12 @@ const ReviewsOnTour = ({id,reviews,setReviews}) => {
   // console.log(reviews,setReviews);
    
     // useEffect(() => {
-      
+
 
       const { data: specialties, isLoading } = useQuery ({
         queryKey: ['reviews'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/reviews/${id}`);
+            const res = await fetch(`https://myapp-beige-ten.vercel.app/reviews/${id}`);
             const data = await res.json();
             setReviews(data);
             return data;
