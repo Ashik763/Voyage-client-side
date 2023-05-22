@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { AiFillGithub } from 'react-icons/ai';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { AuthContext } from '../../Contexts/AuthProvider';
-import { Helmet } from 'react-helmet';
 
-const Title = "Register";
+
 const Register = () => {
     const [error,setError] = useState('');
-    const {signInWithGoogle,createUser,updateUserProfile,setLoading,loading} = useContext(AuthContext);
+    const {signInWithGoogle,createUser,updateUserProfile,setLoading,loading,user} = useContext(AuthContext);
     const navigate = useNavigate();
   
   const location  = useLocation();
@@ -19,36 +18,58 @@ const Register = () => {
       event.preventDefault();
       // //console.log();(event)
       const form = event.target;
+      // console.dir( form[1].files[0] );
       const name  = form.name.value;
-      const photoURL = form.photoUrl.value;
+      const image = form[1].files[0];
       const email = form.email.value;
       const password = form.password.value;
       const checked = form.checkbox.checked;
 
-      console.log(name,photoURL, email, password, checked);
+
+      
+      // console.log(name,photoURL, email, password, checked);
       if(checked){
-        createUser(email,password)
-        .then((userCredential) => {
-          
-          // Signed in 
-          console.log("clicked");
-          const user = userCredential.user;
-          setError('');
-          form.reset();
-          navigate('/');
-          setLoading(true);
-          handleUpdateUserProfile(name,photoURL);
-         
-          //console.log();("successfull",user);
-          
+
+        const formData = new FormData();
+        formData.append('image', image);
+        const url = `https://api.imgbb.com/1/upload?key=d2532bc119b3ee946764e98dd043df67`;
+        fetch( url, {
+            method: 'POST',
+            body: formData
         })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.error(errorMessage);
-          setError(errorMessage);
-          
-        });    
+        .then( res => res.json())
+        .then(imgData => {
+          if(imgData.success){
+             
+              const photoURL = imgData.data.url;
+
+              createUser(email,password)
+              .then((userCredential) => {
+                
+                // Signed in 
+                console.log("clicked");
+                const user = userCredential.user;
+                setError('');
+                form.reset();
+                navigate('/');
+                setLoading(true);
+                handleUpdateUserProfile(name,photoURL);
+               
+                //console.log();("successfull",user);
+                
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error(errorMessage);
+                setError(errorMessage);
+                
+              });  
+             
+            }
+          })
+
+         
       }
       else{
         setError("please accept terms & conditions");
@@ -90,12 +111,13 @@ const Register = () => {
         setError(err.message);
       })
     }
+
+
+    if(user){
+      return <Navigate to="/" state={{from: location}} replace></Navigate>
+     }
     return (
         <div className="m-5  login-container d-flex align-items-center">
-          <Helmet>
-            <title> {Title}</title>
-          </Helmet>
-
         <div className=" border login-content p-10 m-auto ">
           <form onSubmit = {handleSubmit}>
             <div className="mb-3">
@@ -112,10 +134,10 @@ const Register = () => {
               required
             />
               <label htmlFor="photo" className="form-label">
-               photoUrl
+               Image:
               </label>
               <input
-              
+                type="file"
                 name="photoUrl"
                 className="form-control border w-full h-8"
 

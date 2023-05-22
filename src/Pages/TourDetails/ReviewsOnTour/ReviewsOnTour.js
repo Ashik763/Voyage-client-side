@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from "react";
+import { useQuery } from '@tanstack/react-query';
 import ReviewOnTour from "../ReviewOnTour/ReviewOnTour";
 import Spinner from "../../Shared/Spinner/Spinner";
 
 const ReviewsOnTour = ({id,reviews,setReviews}) => {
   // console.log(reviews,setReviews);
    
-    useEffect(() => {
-        fetch(`https://myapp-beige-ten.vercel.app/reviews/${id}`)
-        .then((res) => res.json())
-        .then(data => {
-          
-          setReviews(data)
-        
-        });
-    },[setReviews,id])
+    // useEffect(() => {
+      
 
-    if(reviews?.length == 0 ){
+      const { data: specialties, isLoading } = useQuery ({
+        queryKey: ['reviews'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/reviews/${id}`);
+            const data = await res.json();
+            setReviews(data);
+            return data;
+        }
+    })
+        // fetch(`https://myapp-beige-ten.vercel.app/reviews/${id}`)
+        // .then((res) => res.json())
+        // .then(data => {
+          
+        //   setReviews(data)
+        
+        // });
+    // },[setReviews,id])
+
+    if(isLoading){
+      return <Spinner></Spinner>
+    }
+
+    if(reviews?.length === 0 ){
       return     <div className='m-5 text-2xl flex justify-center items-centerh-96 w-full'>
                         <div>
                         <p className="text-center text-2xl text-red-400 m-5  "> Reviews</p>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import MyReview from './MyReview';
+
 import { Helmet } from 'react-helmet';
 
 const Title = "My Reviews";
@@ -8,11 +10,27 @@ const MyReviews = () => {
     const [reviews, setReviews] = useState([]);
     // setReviews(useLoaderData());
     const {email} = useParams();
-    useEffect(() =>{
-        fetch(`https://myapp-beige-ten.vercel.app/myReviews/${email}`)
-        .then(response => response.json())
-        .then(data => setReviews(data));
-    },[email])
+    // useEffect(() =>{
+        const { data=[] } = useQuery({
+            queryKey: ['myReviews', email],
+            queryFn: async () => {
+                const res = await fetch(`http://localhost:5000/myReviews/${email}`, {
+                    headers: {
+                        authorization: `bearer ${localStorage.getItem('accessToken')}`
+                    }
+                });
+                const data = await res.json();
+                console.log(data);
+                setReviews(data);
+                return data;
+            }
+        })
+
+
+        // fetch(`http://localhost:5000/myReviews/${email}`)
+        // .then(response => response.json())
+        // .then(data => setReviews(data));
+    // },[email])
     
  if(reviews.length === 0){
     return (
@@ -28,7 +46,7 @@ const MyReviews = () => {
             </Helmet>
             {
             // reviews.map(review => <MyReview review = {review}></MyReview>)
-            reviews.map(review => <MyReview review = {review} reviews={reviews} setReviews={setReviews}></MyReview>) }
+          reviews.length>0 &&   reviews.map(review => <MyReview key={review._id} review = {review} reviews={reviews} setReviews={setReviews}></MyReview>) }
             
             {/* } */}
         </div>

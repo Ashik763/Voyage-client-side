@@ -18,6 +18,9 @@ const TourDetails = () => {
     .then(data => setTour(data))
      
   },[id]);
+  useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
 
   // if(reviews.length-1 === instantReviews.length){
   //   console.log("instantReviews")
