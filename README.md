@@ -1,16 +1,22 @@
 # Voyage
 
-"Voyage" is a site where there are different package tours and description about the packages.
+The idea was that Voyage would be a platform where one
+can join some people for traveling.
 
 ## Features
-•  One can add a package.  
-• One can add a review  and can update & delete his reviews. And to do that one needs to be logged in for sure.  
-• One can see reviews on a particular package.  
-• One can Sign up using email & password or with his google account.
 
+↪ Anybody can post his travel plan & the plan has to be
+approved by admin.
+↪People can join some approved travel plans.
+↪Dashboard for a user where one can see the status of his tour
+plan.
+↪ People can give feedback on a specific tour plan.
+↪ Admin panel where admin can approve or discard a tour plan
+and someone else an admin etc.
+↪Responsive on laptop and mobile.
 
-
-### Technologies: React,Express js ,mongodb,tailwind css,daisy UI,Firebase
+**Technologies:** html, css, tailwind css, js, react.js, express.js,
+mongodb.
 
 Live site: https://voyage111.web.app/
 
